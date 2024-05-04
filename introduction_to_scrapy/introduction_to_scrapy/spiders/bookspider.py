@@ -1,5 +1,5 @@
 import scrapy
-
+from introduction_to_scrapy.items import BookItems
 
 class BookspiderSpider(scrapy.Spider):
     name = "bookspider"
@@ -13,11 +13,11 @@ class BookspiderSpider(scrapy.Spider):
         yield from response.follow_all(pagination_links, self.parse)
 
     def parse_book_page(self, response):
-        yield   {
-            'Title': response.css('div.product_main h1::text').get(),
-            'Price': response.css('div.product_main p.price_color::text').get(),
-            'Description': response.xpath('//*[@id="content_inner"]/article/p/text()').get(),
-            'UPC': response.xpath('//*[@id="content_inner"]/article/table/tbody/tr[1]/td/text()').get(),
-            'Avaibility': response.xpath('//*[@id="content_inner"]/article/table/tbody/tr[6]/td/text()').get(),
-            }
-           
+        book_items = BookItems()
+        book_items['title'] =  response.css('div.product_main h1::text')[0].get(),
+        book_items['price'] =  response.css('div.product_main p.price_color::text')[0].get(),
+        book_items['description'] =  response.xpath('//*[@id="content_inner"]/article/p/text()').extract_first(),
+        book_items['upc'] =  response.xpath('/html/body/div/div/div[2]/div[2]/article/table/tbody/tr[1]/td/text()').extract_first(),
+        book_items['avaibility'] =  response.xpath('/html/body/div/div/div[2]/div[2]/article/table/tbody/tr[6]/td/text()').extract_first(),
+
+        yield book_items

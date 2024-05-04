@@ -4,9 +4,11 @@
 # https://docs.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+# from dataclasses import dataclass
 
-
-class IntroductionToScrapyItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class BookItems(scrapy.Item):
+    title = scrapy.Field(serializer=str)
+    price = scrapy.Field(serializer=str)
+    description = scrapy.Field(serializer=str)
+    upc = scrapy.Field(serializer=str)
+    avaibility = scrapy.Field(serializer=str)
