@@ -14,7 +14,7 @@ class IntroductionToScrapyPipeline:
         if adapter.get('price'):
             adapter['price'] = float(adapter['price'].replace('£', ''))
         if adapter.get('avaibility'):
-            adapter['avaibility'] = int(adapter['avaibility'].split('(')[0].split(" ")[0])
+            adapter['avaibility'] = int(adapter['avaibility'].split('(')[1].split(" ")[0])
         if adapter.get('description'):
             adapter['description'] = adapter['description'].strip()
         return item

@@ -8,7 +8,7 @@ import scrapy
 
 class BookItems(scrapy.Item):
     title = scrapy.Field(serializer=str)
-    price = scrapy.Field(serializer=str)
+    price = scrapy.Field(serializer=float)
     description = scrapy.Field(serializer=str)
     upc = scrapy.Field(serializer=str)
-    avaibility = scrapy.Field(serializer=str)
+    avaibility = scrapy.Field(serializer=int)

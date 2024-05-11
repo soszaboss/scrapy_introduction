@@ -12,6 +12,9 @@ BOT_NAME = "introduction_to_scrapy"
 SPIDER_MODULES = ["introduction_to_scrapy.spiders"]
 NEWSPIDER_MODULE = "introduction_to_scrapy.spiders"
 
+FEEDS = {
+   "books.csv": {"format": "csv", "overwrite": True},
+}
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "introduction_to_scrapy (+http://www.yourdomain.com)"
