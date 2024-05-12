@@ -7,8 +7,13 @@ from scrapy import signals
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
+from dotenv import load_dotenv
+from urllib.parse import urlencode
+import requests
+import random
+import os
 
-
+load_dotenv()
 class IntroductionToScrapySpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
@@ -101,3 +106,35 @@ class IntroductionToScrapyDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info("Spider opened: %s" % spider.name)
+
+class RandomHeaderMiddleware:
+    def __init__(self, settings):
+        self.end_point = os.environ.get("ENDPOINT")
+        self.api_key = os.environ.get("API_KEY")
+        self.num_results = os.environ.get("NUM")
+
+    def get_fake_headers(self):
+        params = {
+            "api_key": self.api_key,
+            "num_results": self.num_results,
+            }
+        response = requests.get(self.end_point, params=urlencode(params)).json()['result']
+        return response
+    def get_random_header(self):
+        random_num = random.randrange(0, len(self.get_fake_headers()))
+        return self.get_fake_headers()[random_num]
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(crawler.settings)
+
+    def process_request(self, request, spider):
+        hearder = self.get_random_header()
+
+        # Scrapping c'est pas tous les headers qu'on doit modifier mais une partie de certains elements en fonction du cas present mais ceci est juste une introduction
+
+        for key, value in hearder.items():
+            request.headers[key] = value
+
+        print('*************** New Header ***************')
+        print(request.headers)
+        print('******************************************')

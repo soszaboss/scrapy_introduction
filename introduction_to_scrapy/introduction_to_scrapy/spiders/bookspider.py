@@ -14,8 +14,8 @@ class BookspiderSpider(scrapy.Spider):
 
     def parse_book_page(self, response):
         book_items = BookItems()
-        book_items['title'] =  response.css('div.product_main h1::text')[0].get()
-        book_items['price'] =  response.css('div.product_main p.price_color::text')[0].get()
+        book_items['title'] =  response.css('div.product_main h1::text').get()
+        book_items['price'] =  response.css('div.product_main p.price_color::text').get()
         book_items['description'] =  response.xpath('//*[@id="content_inner"]/article/p/text()').get()
         book_items['upc'] =  response.xpath('//tr[th[contains(text(), "UPC")]]/td/text()').get()
         book_items['avaibility'] =  response.xpath('//tr[th[contains(text(), "Availability")]]/td/text()').get()

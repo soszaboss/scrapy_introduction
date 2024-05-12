@@ -13,7 +13,7 @@ SPIDER_MODULES = ["introduction_to_scrapy.spiders"]
 NEWSPIDER_MODULE = "introduction_to_scrapy.spiders"
 
 FEEDS = {
-   "books.csv": {"format": "csv", "overwrite": True},
+   "books.json": {"format": "json", "overwrite": True},
 }
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -47,15 +47,17 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
+# SPIDER_MIDDLEWARES = {
 #    "introduction_to_scrapy.middlewares.IntroductionToScrapySpiderMiddleware": 543,
-#}
+
+# }
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    "introduction_to_scrapy.middlewares.IntroductionToScrapyDownloaderMiddleware": 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   "introduction_to_scrapy.middlewares.IntroductionToScrapyDownloaderMiddleware": 543,
+   "introduction_to_scrapy.middlewares.RandomHeaderMiddleware": 600,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
