@@ -6,7 +6,16 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+ENDPOINT = os.environ.get("ENDPOINT")
+API_KEY = os.environ.get("API_KEY")
+NUM_RESULT = os.environ.get("NUM")
+SCRAPEOPS_API_KEY=os.environ.get("API_KEY")
+SCRAPEOPS_PROXY_ENABLED = True
 BOT_NAME = "introduction_to_scrapy"
 
 SPIDER_MODULES = ["introduction_to_scrapy.spiders"]
@@ -15,6 +24,9 @@ NEWSPIDER_MODULE = "introduction_to_scrapy.spiders"
 FEEDS = {
    "books.json": {"format": "json", "overwrite": True},
 }
+
+
+# ROTATING_PROXY_LIST_PATH = '../proxy/proxyscrape_premium_http_proxies.txt'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "introduction_to_scrapy (+http://www.yourdomain.com)"
@@ -56,20 +68,26 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    "introduction_to_scrapy.middlewares.IntroductionToScrapyDownloaderMiddleware": 543,
-   "introduction_to_scrapy.middlewares.RandomHeaderMiddleware": 600,
+   # "introduction_to_scrapy.middlewares.RandomHeaderMiddleware": 600,
+   # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+   # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+   'scrapeops_scrapy.middleware.retry.RetryMiddleware': 550,
+   'scrapy.downloadermiddlewares.retry.RetryMiddleware': None,
 }
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
-#EXTENSIONS = {
-#    "scrapy.extensions.telnet.TelnetConsole": None,
-#}
+EXTENSIONS = {
+   # "scrapy.extensions.telnet.TelnetConsole": None,
+   'scrapeops_scrapy.extension.ScrapeOpsMonitor': 500, 
+
+}
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    "introduction_to_scrapy.pipelines.IntroductionToScrapyPipeline": 300,
-   "introduction_to_scrapy.pipelines.SaveToPostgresSql": 400
+   # "introduction_to_scrapy.pipelines.SaveToPostgresSql": 400
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
