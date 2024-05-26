@@ -1,0 +1,2 @@
+[scrapy]
+settings = introduction_to_scrapy.settings

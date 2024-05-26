@@ -1,0 +1,15 @@
+setup.py
+introduction_to_scrapy/__init__.py
+introduction_to_scrapy/items.py
+introduction_to_scrapy/middlewares.py
+introduction_to_scrapy/models.py
+introduction_to_scrapy/pipelines.py
+introduction_to_scrapy/settings.py
+introduction_to_scrapy/test.py
+introduction_to_scrapy/spiders/__init__.py
+introduction_to_scrapy/spiders/bookspider.py
+project.egg-info/PKG-INFO
+project.egg-info/SOURCES.txt
+project.egg-info/dependency_links.txt
+project.egg-info/entry_points.txt
+project.egg-info/top_level.txt

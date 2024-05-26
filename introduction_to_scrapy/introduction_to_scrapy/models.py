@@ -1,15 +1,16 @@
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import Text, Integer, Float, String
+from sqlalchemy import Text, Integer, Float, String, Column
+from sqlalchemy.ext.declarative import declarative_base
 
-class Base(DeclarativeBase):
-    pass
+
+Base = declarative_base()
+
 
 class Book(Base):
     __tablename__ = "books"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str] = mapped_column(String(75), nullable=False)
-    price: Mapped[float] = mapped_column()
-    description = mapped_column(Text)
-    upc: Mapped[str] = mapped_column(String(18), nullable=False, unique=True)
-    avaibility: Mapped[int] = mapped_column()
+    id = Column(Integer, primary_key=True)
+    title = Column(String(75), nullable=False)
+    price = Column(Float)
+    description = Column(Text)
+    upc = Column(String(18), nullable=False, unique=True)
+    availability = Column(Integer)
